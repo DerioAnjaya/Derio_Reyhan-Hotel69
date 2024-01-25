@@ -16,7 +16,8 @@ const storage = multer.diskStorage({
   },
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({storage: multer.memoryStorage()})
+// const upload = multer({ storage: storage })
 
 const isLogin = (req, res, next) => {
   if (req.session.userId) {

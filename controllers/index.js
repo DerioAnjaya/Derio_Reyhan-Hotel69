@@ -134,6 +134,7 @@ class Controller {
                     id: req.session.userId
                 }
             })
+            // res.send(data)
             res.render('hotel', {data, user, info})
         } catch (error) {
             res.send(error);
@@ -164,13 +165,17 @@ class Controller {
                 price,
                 location
             } = req.body
+            console.log(req.file);
+            const buffer = req.file.buffer
+            const decodeBuffer = Buffer.from(buffer).toString("base64")
+            const changeImg = `data:${req.file.mimetype};base64,${decodeBuffer}`
             await Hotel.create({
                 name,
                 rate,
                 facility,
                 price,
                 location,
-                imgUrl: `uploads/${req.file.filename}`
+                imgUrl: changeImg
             })
             const {id} = await Hotel.findOne({
                 attributes: ['id'],
