@@ -218,16 +218,22 @@ class Controller {
                 price,
                 location
             } = req.body
-            await Hotel.create({
-                HotelId: idHotel,
-                name,
-                rate,
-                facility,
-                price,
-                location
+            console.log(req.body);
+            await Hotel.update({
+                name: name,
+                rate: rate,
+                facility: facility,
+                price: price,
+                location: location
+            }, 
+            {
+                where: {
+                    id: idHotel
+                }
             })
             res.redirect("/host/hotels")
         } catch (error) {
+            console.log(error.message);
             res.send(error);
         }
     }
